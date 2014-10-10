@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#rm -r pipe
+#mkfifo pipe
+#netcat -vl 8080 | while read user<pipe
+#do
+#    cat ips/$user
+#    echo "giving ip of $user" >> logs
+#done > pipe
+
+rm -f pipe
+mkfifo pipe
+cat pipe | /bin/bash ./bin/cat_user >pipe | nc -vl 8080 > pipe
+
+
