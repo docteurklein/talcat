@@ -1,13 +1,19 @@
 #!/bin/bash
 
-netcat -vl -l ${1-8081} | while read line
-do
-    user=$(echo $line | awk {'print $1'} -)
-    ip=$(echo $line | awk {'print $2'} -)
+#USAGE: PORT=8081 ./bin/put
 
-    mkdir -p ips
-    echo $ip > ips/$user
-    echo "added $user $ip" | tee >> logs
+echo "listening on ${PORT-8081}"
+
+while true; do
+    netcat -vl -l ${PORT-8081} | while read line
+    do
+        user=$(echo $line | awk {'print $1'} -)
+        ip=$(echo $line | awk {'print $2'} -)
+
+        mkdir -p ips
+        echo $ip > ips/$user
+        echo "added $user $ip" | tee >> logs
+    done
 done
 
 

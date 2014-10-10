@@ -1,7 +1,7 @@
 #!/bin/bash
 
-read user
-cat ips/$user
+read -u 3 user
+cat ips/$user >&4
 echo "giving ip of $user" >> logs
 
 
